@@ -4,6 +4,9 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
+import {FormsModule} from '@angular/forms';
+import {AuthService} from '../services/auth.service';
+import {HttpClientModule} from '@angular/common/http';
 
 
 @NgModule({
@@ -12,9 +15,11 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
     LandingPageComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

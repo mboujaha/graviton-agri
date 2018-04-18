@@ -1,7 +1,12 @@
-declare var require: any;
+import {NgForm} from '@angular/forms';
 import {AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
 import {} from '../../assets/build';
 import * as THREE from 'three';
+import {LoginModel} from '../../models/login.model';
+import {AuthService} from '../../services/auth.service';
+import {Router} from '@angular/router';
+
+declare var require: any;
 
 const STLLoader = require('three-stl-loader')(THREE);
 
@@ -22,15 +27,16 @@ export class LandingPageComponent implements OnInit, AfterViewInit {
   camera = null;
   cameraTarget = null;
   loader = null;
+  errorMessage = null;
 
-  constructor() {
+  constructor(private authService: AuthService) {
 
-    this.camera = new THREE.PerspectiveCamera(8, window.innerWidth / window.innerHeight);
+    this.camera = new THREE.PerspectiveCamera(8, window.innerWidth / window.innerHeight, 1, 1000);
     this.cameraTarget = new THREE.Vector3(0, 0, 0);
     this.scene = new THREE.Scene();
 
     this.loader = new STLLoader();
-    this.loader.load('/assets/logo3d.stl',  (geometry) => {
+    this.loader.load('/assets/logo3d.stl', (geometry) => {
       const material = new THREE.MeshPhongMaterial({color: 0xF35F15, specular: null, shininess: 50});
       material.transparent = true;
       material.opacity = 0.8;
@@ -64,28 +70,47 @@ export class LandingPageComponent implements OnInit, AfterViewInit {
   ngOnInit() {
   }
 
-   @HostListener('window:resize', ['$event'])
-    onWindowResize(event) {
-     this.camera.aspect = window.innerWidth / window.innerHeight;
-     this.camera.updateProjectionMatrix();
-     this.renderer.setSize( window.innerWidth / 4, window.innerHeight / 3 );
-    }
+  @HostListener('window:resize', ['$event'])
+  onWindowResize(event) {
+    this.camera.aspect = window.innerWidth / window.innerHeight;
+    this.camera.updateProjectionMatrix();
+    this.renderer.setSize(window.innerWidth / 8, window.innerHeight / 6);
+  }
 
   addShadowedLight(x, y, z, color, intensity) {
-   const directionalLight = new THREE.DirectionalLight(color, intensity);
-   directionalLight.position.set(x, y, z);
-   this.scene.add(directionalLight);
-   directionalLight.castShadow = true;
+    const directionalLight = new THREE.DirectionalLight(color, intensity);
+    directionalLight.position.set(x, y, z);
+    this.scene.add(directionalLight);
+    directionalLight.castShadow = true;
     const d = 1;
-   directionalLight.shadow.camera.left = -d;
-   directionalLight.shadow.camera.right = d;
-   directionalLight.shadow.camera.top = d;
-   directionalLight.shadow.camera.bottom = -d;
-   directionalLight.shadow.camera.near = 1;
-   directionalLight.shadow.camera.far = 4;
-   directionalLight.shadow.mapSize.width = 1024;
-   directionalLight.shadow.mapSize.height = 1024;
-   directionalLight.shadow.bias = -0.002;
- }
+    directionalLight.shadow.camera.left = -d;
+    directionalLight.shadow.camera.right = d;
+    directionalLight.shadow.camera.top = d;
+    directionalLight.shadow.camera.bottom = -d;
+    directionalLight.shadow.camera.near = 1;
+    directionalLight.shadow.camera.far = 4;
+    directionalLight.shadow.mapSize.width = 1024;
+    directionalLight.shadow.mapSize.height = 1024;
+    directionalLight.shadow.bias = -0.002;
+  }
 
+  submitForm(form: NgForm) {
+    const values = form.value;
+
+    const login = new LoginModel();
+
+    login.username = values.username;
+    login.password = values.password;
+
+
+    this.authService.login(login).subscribe(
+      (res) => {
+        this.authService.setLoggedUser(res);
+        console.log(res);
+      },
+      (err) => {
+        this.errorMessage = err.message;
+        form.reset();
+      });
+    }
 }

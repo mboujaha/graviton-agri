@@ -1,9 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
-*{
+* {
   box-sizing: border-box;
 }
 
-body{
+body {
   margin: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, Sans-Serif;
   font-size: 1rem;
@@ -11,6 +11,7 @@ body{
   color: #333;
   overflow-x: hidden;
 }
+
 .v-header {
   height: 100vh;
   display: flex;
@@ -24,6 +25,7 @@ body{
   padding-right: 1rem;
   margin: auto;
   text-align: center;
+  align-content: center;
 }
 
 .fullscreen-video-wrap {
@@ -35,10 +37,11 @@ body{
   overflow: hidden;
 }
 
-.fullscreen-video-wrap video{
+.fullscreen-video-wrap video {
   min-width: 100%;
   min-height: 100%;
 }
+
 .header-overlay {
   height: 100vh;
   width: 100vw;
@@ -53,23 +56,139 @@ body{
 .content-landing {
   z-index: 2;
   position: absolute;
-  top: 15%;
-  left: 40%;
-}
-
-html,
-body {
-  height: 100%;
-}
-
-body {
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-align: center;
-  align-items: center;
-  padding-top: 40px;
-  padding-bottom: 40px;
-  background-color: #f5f5f5;
+  top: 0;
+  left: 0;
+  transform: translate(150%, 50%);
 }
 
 
+/* ------------------------------------- */
+
+
+
+
+
+.login-html {
+
+}
+
+.login-html .sign-in,
+.login-form .group .check {
+  display: none;
+}
+
+
+
+
+/*change the form properties */
+
+.login-form {
+  min-width: 100%;
+  width: 25vw;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+
+.login-form .group {
+  margin-bottom: 15px;
+}
+
+/*change color of inside button and inouts */
+
+.login-form .group .label,
+.login-form .group .input {
+  width: 100%;
+  color: #FC6928;
+  display: block;
+}
+
+.login-form .group .button {
+  color: white;
+  width: 60%;
+}
+
+.login-form .group .input,
+.login-form .group .button {
+  border: none;
+  padding: 15px 20px;
+  border-radius: 25px;
+}
+
+.login-form .group input[data-type="password"] {
+  text-security: circle;
+  -webkit-text-security: circle;
+}
+
+
+
+/*change button color */
+.login-form .group .button {
+  background: rgba(255, 59, 0, 0.8);
+  cursor: pointer;
+  box-shadow: 0 12px 15px 0 rgba(0, 0, 0, .24), 0 17px 50px 0 rgba(0, 0, 0, .19);
+}
+
+.login-form .group .input {
+  background: rgb(255, 255, 255);
+  color: #000;
+  box-shadow: 0 12px 15px 0 rgba(0, 0, 0, .24), 0 17px 50px 0 rgba(0, 0, 0, .19);
+  opacity: 0.8;
+}
+
+.login-form .group label .icon {
+  width: 15px;
+  height: 15px;
+  border-radius: 2px;
+  position: relative;
+  display: inline-block;
+  background: rgba(255, 255, 255, .1);
+}
+
+.login-form .group label .icon:before,
+.login-form .group label .icon:after {
+  content: '';
+  width: 10px;
+  height: 2px;
+  background: #fff;
+  position: absolute;
+  transition: all .2s ease-in-out 0s;
+}
+
+.login-form .group label .icon:before {
+  left: 3px;
+  width: 5px;
+  bottom: 6px;
+  -webkit-transform: scale(0) rotate(0);
+  transform: scale(0) rotate(0);
+}
+
+.login-form .group label .icon:after {
+  top: 6px;
+  right: 0;
+  -webkit-transform: scale(0) rotate(0);
+  transform: scale(0) rotate(0);
+}
+
+/*when checking adjust color */
+.login-form .group .check:checked + label {
+  color: #fff;
+}
+
+.login-form .group .check:checked + label .icon {
+  background: #ee4900;
+}
+
+.login-form .group .check:checked + label .icon:before {
+  -webkit-transform: scale(1) rotate(45deg);
+  transform: scale(1) rotate(45deg);
+}
+
+.login-form .group .check:checked + label .icon:after {
+  -webkit-transform: scale(1) rotate(-45deg);
+  transform: scale(1) rotate(-45deg);
+}
+
+
+.mb4 {
+  margin-bottom: 2%;
+}
