@@ -8,7 +8,7 @@ import {AppUser} from '../models/appUser.mode';
 @Injectable()
 export class AuthService {
 
-  baseURL = 'http://localhost:3000/api/auth/';
+  private baseURL = 'http://localhost:3000/api/auth/';
 
   constructor(private http: HttpClient) {
 
@@ -21,4 +21,5 @@ export class AuthService {
   setLoggedUser(userInfo: AppUser) {
 
   }
+
 }

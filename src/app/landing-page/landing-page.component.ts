@@ -5,6 +5,7 @@ import * as THREE from 'three';
 import {LoginModel} from '../../models/login.model';
 import {AuthService} from '../../services/auth.service';
 import {Router} from '@angular/router';
+import {jsonpFactory} from '@angular/http/src/http_module';
 
 declare var require: any;
 
@@ -70,6 +71,7 @@ export class LandingPageComponent implements OnInit, AfterViewInit {
   ngOnInit() {
   }
 
+
   @HostListener('window:resize', ['$event'])
   onWindowResize(event) {
     this.camera.aspect = window.innerWidth / window.innerHeight;
@@ -102,7 +104,6 @@ export class LandingPageComponent implements OnInit, AfterViewInit {
     login.username = values.username;
     login.password = values.password;
 
-
     this.authService.login(login).subscribe(
       (res) => {
         this.authService.setLoggedUser(res);
@@ -112,5 +113,5 @@ export class LandingPageComponent implements OnInit, AfterViewInit {
         this.errorMessage = err.message;
         form.reset();
       });
-    }
+  }
 }
